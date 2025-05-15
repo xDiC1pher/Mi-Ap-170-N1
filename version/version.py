@@ -21,4 +21,5 @@ Version MAJOR.MINOR.PATCH
 
 #   version = "v1.0.0"
 #   version = "v2.0.0"
-version = "v2.1.1"
+#   version = "v2.1.1"
+version = "v2.1.2"
