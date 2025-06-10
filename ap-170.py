@@ -31,36 +31,37 @@ def fn_guardar_inventario(lnom, lpre, lsto):
         for i in range(len(lnom)):
             inventario.write(lnom[i]+"\n")
             inventario.write(str(lpre[i])+"\n")
-            inventario.write(str(lsto[i])+"\n")
+            inventario.write(str(lsto[i])+"\n")            
+            #inventario.write(lnom[i]+";"+str(lpre[i])+";"+str(lsto[i])+"\n")
         print("inventario guardado en inventario.txt")
+
 
 def fn_cargar_inventario(lnom, lpre, lsto):
     try:
-        with open("inventario.csv", "r", encoding= "utf-8") as inventario
-            lineas= inventario.readlines()
-            num_lin = len(lineas)
+        with open("inventario.txt", "r", encoding = "utf-8") as inventario:
+            lineas = inventario.readlines()
+            num_lin = len( lineas )
             for i in range (0, num_lin, 3):
-                nom= lineas[i], strip()
-                pre= float(lineas[i], strip())
+                nom = lineas[i].strip()
+                pre = float(lineas[i+1].strip())
                 cant = int(lineas[i+2].strip())
                 lnom.append(nom)
                 lpre.append(pre)
                 lsto.append(cant)
         print("Inventario cargado correctamente")
-    except FileNotFoundError
-        print("No se encontro el archivo 'inventario.txt'. Inventario vació")
+    except FileNotFoundError:
+        print("No se encontró el archivo 'inventario.txt'. Inventario Vacío")
     except Exception as error:
-        print("Error al cargar el archivo ", error)
-
+        print("Error al cargar el inventario ",error)
 
 #Programa Principal
 version = "v2.1.0"
-#nombre = ['Plumon', 'Borrador', 'Pizarra']
-#precio = [1850.0, 3500.0, 13500.0]
-#stock = [20, 5, 10]
+# lnombre = ['Plumon', 'Borrador', 'Pizarra']
+# lprecio = [1850.0, 3500.0, 13500.0]
+# lstock = [20, 5, 10]
 lprecio = []
 lnombre = []
-lstock  = []
+lstock  = [] 
 
 fn_cargar_inventario(lnombre, lprecio, lstock)
 salir = False
