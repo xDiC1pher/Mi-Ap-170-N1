@@ -36,6 +36,14 @@ def fn_guardar_inventario_txt(lnom, lpre, lsto):
             #inventario.write(lnom[i]+";"+str(lpre[i])+";"+str(lsto[i])+"\n")
         print("inventario guardado en inventario.txt")
 
+def exportar_inventario_csv(lnom, lpre, lsto):
+    with open("inventario.txt", "w", encoding = "utf-8") as inventario:
+        inventario.write("PRODUCTO;PRECIO;CANTIDAD\n")
+        for i in range(len(lnom)):
+            inventario.write(lnom[i]) +";" + str(lpre[i]) +";" str(lsto[i])+"\n")            
+            #inventario.write(lnom[i]+";"+str(lpre[i])+";"+str(lsto[i])+"\n")
+        print("inventario exportado a inventario.csv")
+
 def fn_cargar_inventario_txt(lnom, lpre, lsto):
     try:
         with open("inventario.txt", "r", encoding = "utf-8") as inventario:
@@ -93,12 +101,13 @@ while (not salir):
     print("[3] Buscar Producto")
     print("[4] Modificar Stock")
     print("[5] Eliminar Producto")
-    print("[6] Salir")
+    print("[7] Salir")
     op = input("Opción: ")
 
     # AGREGAR PRODUCTO *************
     if (op == "1"):
         fn_agregar_producto(lnombre, lprecio, lstock)
+        fn_guardar_inventario_bin(lnombre, lprecio, lstock)
     # LISTAR PRODUCTO *************
     if (op == "2"):
         fn_listar_producto(lnombre, lprecio, lstock)
@@ -108,11 +117,16 @@ while (not salir):
     # MODIFICAR PRODUCTO *************
     if (op == "4"):
         fn_modificar_producto(lnombre, lprecio, lstock)
+        fn_guardar_inventario_bin(lnombre, lprecio, lstock)
     # ELIMINAR PRODUCTO *************
     if (op == "5"):
         fn_eliminar_producto(lnombre, lprecio, lstock)
-    # ELIMINAR PRODUCTO *************
-    if op == "6": 
+        fn_guardar_inventario_bin(lnombre, lprecio, lstock)
+    # EXPORTAR INVENTARIO *************
+    if (op == "6"):
+        fn_eliminar_producto(lnombre, lprecio, lstock)
+    # SALIR PRODUCTO *************
+    if op == "7": 
         # fn_guardar_inventario_txt(lnombre, lprecio, lstock)
         fn_guardar_inventario_bin(lnombre, lprecio, lstock)
         salir = True

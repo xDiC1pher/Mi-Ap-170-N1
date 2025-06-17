@@ -1,0 +1,9 @@
+Plumon
+1850.0
+20
+Borrador
+3500.0
+5
+Pizarra
+13500.0
+10
