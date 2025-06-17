@@ -1,5 +1,6 @@
 #import ap170funciones as f
 from ap170funciones import *
+import pickle
 
 # Proyecto : Control de inventario de un almacen
 # Autor: Manuel Sánchez Cárcamo
@@ -26,7 +27,7 @@ Version MAJOR.MINOR.PATCH
 #                 Además se separan las funciones del programa principal.
 
 
-def fn_guardar_inventario(lnom, lpre, lsto):
+def fn_guardar_inventario_txt(lnom, lpre, lsto):
     with open("inventario.txt", "w", encoding = "utf-8") as inventario:
         for i in range(len(lnom)):
             inventario.write(lnom[i]+"\n")
@@ -35,8 +36,7 @@ def fn_guardar_inventario(lnom, lpre, lsto):
             #inventario.write(lnom[i]+";"+str(lpre[i])+";"+str(lsto[i])+"\n")
         print("inventario guardado en inventario.txt")
 
-
-def fn_cargar_inventario(lnom, lpre, lsto):
+def fn_cargar_inventario_txt(lnom, lpre, lsto):
     try:
         with open("inventario.txt", "r", encoding = "utf-8") as inventario:
             lineas = inventario.readlines()
@@ -54,6 +54,26 @@ def fn_cargar_inventario(lnom, lpre, lsto):
     except Exception as error:
         print("Error al cargar el inventario ",error)
 
+def fn_guardar_inventario_bin (lnom, lpre, lsto):
+    with open("inventario.bin", "wb") as archivo:
+        pickle.dump((lnom, lpre, lsto), archivo)
+    print("inventario guardado en inventario.bin")
+
+def fn_cargar_inventario_bin(lnom, lpre, lsto):
+    try:
+        with open("inventario.bin", "rb") as archivo:
+            datos = pickle.load(archivo)
+            lnom.extend(datos[0])
+            lpre.extend(datos[1])
+            lsto.extend(datos[2])
+        print("Inventario cargado correctamente")
+    except FileNotFoundError:
+        print("No se encontró el archivo 'inventario.bic'. Inventario Vacío")
+    except Exception as error:
+        print("Ups!, ocurrio el error: ", error)
+    
+
+
 #Programa Principal
 version = "v2.1.0"
 # lnombre = ['Plumon', 'Borrador', 'Pizarra']
@@ -63,7 +83,8 @@ lprecio = []
 lnombre = []
 lstock  = [] 
 
-fn_cargar_inventario(lnombre, lprecio, lstock)
+# fn_cargar_inventario_txt(lnombre, lprecio, lstock)
+fn_cargar_inventario_bin(lnombre, lprecio, lstock)
 salir = False
 while (not salir):
     print(f"**** MENU {version} ****")
@@ -92,7 +113,8 @@ while (not salir):
         fn_eliminar_producto(lnombre, lprecio, lstock)
     # ELIMINAR PRODUCTO *************
     if op == "6": 
-        fn_guardar_inventario(lnombre, lprecio, lstock)
+        # fn_guardar_inventario_txt(lnombre, lprecio, lstock)
+        fn_guardar_inventario_bin(lnombre, lprecio, lstock)
         salir = True
         print("Hasta luego")
     
